@@ -1,0 +1,5 @@
+/.vs
+*.user
+*.bak
+/API.Osmosis/bin
+/API.Osmosis/obj
