@@ -10,6 +10,9 @@ jobs:
       run:
         shell: bash
         working-directory: API
+    env:
+      sql-connstring: ${{ secrets.EMAIL_API_KEY }}
+      email-api-key: ${{ secrets.EMAIL_API_KEY }}
     steps:
     - uses: actions/checkout@v2
     - uses: azure/docker-login@v1

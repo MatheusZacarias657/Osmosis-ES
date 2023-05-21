@@ -12,15 +12,20 @@ namespace Osmosis
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var configBuilder = new ConfigurationBuilder();
+            configBuilder.AddEnvironmentVariables();
+            var configuration = configBuilder.Build();
+
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            var a = builder.Configuration["sql-connstring"];
             //adição de uma instância global de banco
             builder.Services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
+            options.UseSqlServer(builder.Configuration["sql-connstring"]));
 
             //adiciona o contexto HTTP da requisição pra poder capturar todas as informações que venham
             builder.Services.AddHttpContextAccessor();

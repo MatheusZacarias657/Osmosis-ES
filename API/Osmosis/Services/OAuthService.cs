@@ -50,7 +50,7 @@ namespace Osmosis.Services
 
                     StringContent content = new StringContent(JsonSerializer.Serialize(body));
                     content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                    request.DefaultRequestHeaders.Add("api-key", configuration.GetValue<string>("Sendingblue:Api-key"));
+                    request.DefaultRequestHeaders.Add("api-key", configuration["email-api-key"]);
 
                     HttpResponseMessage response = await request.PostAsync(url, content);
                     Stream streamData = await response.Content.ReadAsStreamAsync();
