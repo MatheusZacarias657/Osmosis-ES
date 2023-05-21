@@ -9,7 +9,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: app
+        working-directory: API
     steps:
     - uses: actions/checkout@v2
     - uses: azure/docker-login@v1
@@ -18,5 +18,5 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . -t osmosiseds.azurecr.io/app:${{ github.sha }}
-        docker push osmosiseds.azurecr.io/app:${{ github.sha }}
+        docker build . -t osmosiseds.azurecr.io/osmosis:${{ github.sha }}
+        docker push osmosiseds.azurecr.io/osmosis:${{ github.sha }}
