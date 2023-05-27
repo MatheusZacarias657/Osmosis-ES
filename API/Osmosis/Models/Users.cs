@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Osmosis.Services;
+using Osmosis.Models.Validator;
 using System.ComponentModel.DataAnnotations;
 
 namespace Osmosis.Models

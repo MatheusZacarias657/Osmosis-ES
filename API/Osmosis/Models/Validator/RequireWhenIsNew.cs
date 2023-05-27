@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Osmosis.Services
+namespace Osmosis.Models.Validator
 {
     public class RequireWhenIsNew : ValidationAttribute
     {
@@ -12,14 +12,14 @@ namespace Osmosis.Services
             if (!id.Equals("0"))
                 return ValidationResult.Success;
 
-            string prop = string.Empty; 
+            string prop = string.Empty;
 
             try
             {
                 prop = value.ToString();
             }
             catch { }
-            
+
             return string.IsNullOrEmpty(prop) ? new ValidationResult("Value is required.") : ValidationResult.Success;
         }
     }
