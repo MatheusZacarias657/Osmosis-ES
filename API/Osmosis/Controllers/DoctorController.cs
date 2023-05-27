@@ -13,14 +13,16 @@ namespace Osmosis.Controllers
     public class DoctorController : CRUDController<Doctors>
     {
         private DoctorsDAO _doctorsDAO;
+        private AppointmentDAO _appointmentDAO;
 
         public DoctorController(DataContext datacontext, IBaseDAO<Doctors> genericDAO) : base(genericDAO)
         {
             _doctorsDAO = new DoctorsDAO(datacontext);
+            _appointmentDAO = new AppointmentDAO(datacontext);
         }
 
         [HttpPost]
-        [Authorize ("AllUsers")]
+        [Authorize ("RequireAdmin")]
         [ActionName ("")]
         public override ActionResult Create(Doctors doctor)
         {
@@ -40,7 +42,7 @@ namespace Osmosis.Controllers
         }
 
         [HttpPut]
-        [Authorize("AllUsers")]
+        [Authorize("RequireAdmin")]
         [ActionName("")]
         public override ActionResult Update(Doctors doctor)
         {
@@ -63,13 +65,13 @@ namespace Osmosis.Controllers
         }
 
         [HttpDelete]
-        [Authorize("AllUsers")]
+        [Authorize("RequireAdmin")]
         [ActionName("")]
         public ActionResult Delete(int id)
         {
             try
             {
-                //fechar todas as consultas do médico
+                _appointmentDAO.CloseAppointmentsByDoctorId(id);
                 return base.Delete(id);
             }
             catch (Exception ex)
@@ -79,7 +81,7 @@ namespace Osmosis.Controllers
         }
 
         [HttpGet]
-        [Authorize("AllUsers")]
+        [Authorize("RequireAdmin")]
         [ActionName("")]
         public ActionResult Get([FromQuery] Dictionary<string, string>? filters)
         {

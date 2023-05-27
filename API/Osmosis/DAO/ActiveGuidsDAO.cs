@@ -6,18 +6,14 @@ namespace Osmosis.DAO
 {
     public class ActiveGuidsDAO : BaseDAO<ActiveGuids>
     {
-        private DataContext _datacontext;
-
-        public ActiveGuidsDAO(DataContext datacontext) : base(datacontext)
-        {
-            _datacontext = datacontext;
-        }
+        public ActiveGuidsDAO(DataContext datacontext) : base(datacontext) { }
 
         public ActiveGuids FindSessionByGuid (string guid)
         {
             try
             {
-                ActiveGuids session = _datacontext.ActiveGuids.Where(x => x.guid.Equals(guid) && GenericServices.GetCurrentDateTime() < x.expirationDate).FirstOrDefault();
+                DateTime now = GenericServices.GetCurrentDateTime();
+                ActiveGuids session = _datacontext.ActiveGuids.Where(x => x.guid.Equals(guid) && now  < x.expirationDate.Value).FirstOrDefault();
 
                 if (session == null)
                     throw new Exception("user not logged");
@@ -35,7 +31,8 @@ namespace Osmosis.DAO
             try
             {
                 List<ActiveGuids> sessions = _datacontext.ActiveGuids.Where(x => x.id_user == id).ToList();
-                sessions.ForEach(x => x.expirationDate = GenericServices.GetCurrentDateTime());
+                DateTime now = GenericServices.GetCurrentDateTime();
+                sessions.ForEach(x => x.expirationDate = now);
                 _datacontext.ActiveGuids.UpdateRange(sessions);
                 _datacontext.SaveChanges();
             }

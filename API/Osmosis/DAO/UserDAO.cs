@@ -6,12 +6,7 @@ namespace Osmosis.DAO
 {
     public class UserDAO : BaseDAO<Users>
     {
-        private DataContext _datacontext;
-
-        public UserDAO(DataContext datacontext) : base(datacontext)
-        {
-            _datacontext = datacontext;
-        }
+        public UserDAO(DataContext datacontext) : base(datacontext) { }
 
         public bool VerifyLoginIsUnique(string login)
         {

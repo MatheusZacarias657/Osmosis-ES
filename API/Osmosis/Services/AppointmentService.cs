@@ -19,7 +19,9 @@ namespace Osmosis.Services
 
         public static bool ValidPeriod(Appointment appointment)
         {
-            if (appointment.appointmentTime.HasValue && appointment.appointmentTime.Value < GenericServices.GetCurrentDateTime())
+            DateTime now = GenericServices.GetCurrentDateTime();
+
+            if (appointment.appointmentTime.HasValue && appointment.appointmentTime.Value < now)
                 return false;
 
             List<DailyAppointments> dailyAppointments = _dailyAppointmentDAO.GetDailyAppointmentByDoctorId(appointment.id_doctor);

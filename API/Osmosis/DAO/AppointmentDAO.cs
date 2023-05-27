@@ -6,11 +6,7 @@ namespace Osmosis.DAO
 {
     public class AppointmentDAO: BaseDAO<Appointment> 
     {
-        private DataContext _datacontext;
-        public AppointmentDAO(DataContext datacontext) : base(datacontext) 
-        {
-            _datacontext = datacontext;
-        }
+        public AppointmentDAO(DataContext datacontext) : base(datacontext) { }
 
         public List<Appointment> FindAppointmentsByDoctorId(int id, DateTime date)
         {
@@ -59,6 +55,21 @@ namespace Osmosis.DAO
             catch (Exception error)
             {
                 throw error;
+            }
+        }
+
+        public void CloseAppointmentsByDoctorId(int id)
+        {
+            try
+            {
+                List<Appointment> appointments = _datacontext.Appointments.Where(x => x.id_doctor == id).ToList();
+                appointments.ForEach(x => x.id_status = 4);
+                _datacontext.Appointments.UpdateRange(appointments);
+                _datacontext.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
     }

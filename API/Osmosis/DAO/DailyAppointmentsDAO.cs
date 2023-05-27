@@ -5,11 +5,7 @@ namespace Osmosis.DAO
 {
     public class DailyAppointmentDAO: BaseDAO<DailyAppointments> 
     {
-        private DataContext _datacontext;
-        public DailyAppointmentDAO(DataContext datacontext) : base(datacontext) 
-        {
-            _datacontext = datacontext;
-        }
+        public DailyAppointmentDAO(DataContext datacontext) : base(datacontext) { }
 
         public List<DailyAppointments> GetDailyAppointmentByDoctorId(int id)
         {
